@@ -1,0 +1,85 @@
+{% extends 'base.html' %}
+{% block head %}
+<style type="text/css">
+     body {
+      background-color: #DADADA;
+    }
+    body > .grid {
+      height: 100%;
+    }
+    .column {
+      max-width: 450px;
+    }
+    #margin {
+        margin-top: 10%;
+    }
+    i.user.icon, i.at.icon, i.lock.icon {
+      margin: 5px;
+    }
+</style>
+{% endblock head %}
+
+{% block content %}
+<div class="ui container">
+  <div class="ui middle aligned center aligned grid">
+    <div id="margin" class="ui placeholder segment">
+        <div class="ui column very relaxed stackable grid">
+          <div class="column">
+            <h3 class="ui header">
+              <i class="edit icon"></i>
+              <div class="content">
+                  Registrarse
+              </div>
+            </h3>
+            <form action="" method="post"  class="ui form" novalidate>
+              {{ form.hidden_tag() }}
+              <div class="field">
+                <label>{{ form.username.label }}</label>
+                <div class="ui inline fields">
+                  <i class="user icon"></i>
+                  {{ form.username(class="ui left icon input", placeholder="Ingrese un nombre de usuario", size=32) }}
+                </div>
+                {% for error in form.username.errors %}
+                <span class="ui pointing red basic label">{{ error }}</span>
+                {% endfor %}
+              </div>
+              <div class="field">
+                <label>{{ form.email.label }}</label>
+                <div class="ui inline fields">
+                  <i class="at icon"></i>
+                  {{ form.email(class="ui left icon input", placeholder="Email") }}
+                </div>
+                {% for error in form.email.errors %}
+                <span class="ui pointing red basic label">{{ error }}</span>
+                {% endfor %}
+              </div>
+              <div class="field">
+                <label>{{ form.password.label }}</label>
+                <div class="ui inline fields">
+                  <i class="lock icon" style="margin-left: 4px;"></i>
+                  {{ form.password(class="ui left icon input", placeholder="Contraseña", size=32) }}
+                </div>
+                {% for error in form.password.errors %}
+                <span class="ui pointing red basic label">{{ error }}</span>
+                {% endfor %}
+              </div>
+              <div class="field">
+                <label>{{ form.confirm_password.label }}</label>
+                <div class="ui inline fields">
+                  <i class="lock icon" style="margin-left: 4px;"></i>
+                  {{ form.confirm_password(class="ui left icon input", placeholder="Repita la Contraseña", size=32) }}
+                </div>
+                {% for error in form.confirm_password.errors %}
+                <span class="ui pointing red basic label">{{ error }}</span>
+                {% endfor %}
+              </div>
+              <div>{{ form.submit(class="ui blue submit button") }}</div>
+            </form>
+            <br>
+            <div>Ya tienes cuenta? <a href="{{ url_for('auth.login') }}">Inicia Sessión</a></div>
+          </div>
+        </div>
+    </div>  
+</div>
+</div>
+{% endblock content %}

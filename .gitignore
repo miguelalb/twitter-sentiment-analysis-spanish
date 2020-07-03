@@ -1,0 +1,7 @@
+venv
+app.db
+__pycache__
+model-training
+logs
+gcp-config
+local-deploy

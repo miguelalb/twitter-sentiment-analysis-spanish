@@ -1,0 +1,151 @@
+{% extends "base.html" %}
+{% block head %}
+<style>
+    #showcase{
+    color: white;
+    height: 100vh;
+    background-image: url("static/images/bg-image.jpg");
+    background-position: center;
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    }
+    .ui.container .menu.right .item {
+        color: white;
+        font-weight: bold;
+    }
+    #menu{
+        background: rgba(0, 3, 39, 0.39);
+        box-shadow: 0px 15px 10px -15px #111;
+    }
+    .hom-txt{
+        margin-top: 200px;
+    }
+</style>
+{% endblock head %}
+{% block content %}
+<header id="showcase">
+   <div class="ui stackable secondary menu" id="menu">
+        <div class="ui container">
+            <div class="menu right">
+                {% if current_user.is_authenticated %}
+                <a href="#about" class="item">About</a>
+                <a href="#contactos" class="item">Contactos</a>
+                <a href="{{ url_for('main.main') }}" class="item">Applicación</a>
+                <a href="{{ url_for('auth.logout') }}" class="item">Log Out</a>
+                {% else %}
+                <a href="#top" class="item">Home</a>
+                <a href="#about" class="item">About</a>
+                <a href="#contactos" class="item">Contactos</a>
+                <a href="{{ url_for('auth.login') }}" class="item">Log In</a>
+                <a href="{{ url_for('auth.register') }}" class="item">Registrarse</a>
+                {% endif %}
+                <span id="top"></span>
+            </div>
+        </div>
+   </div> 
+   <div class="ui container">
+    <div class="ui two column grid padded" >
+        <div class="row hom-txt">
+         <div class="column">
+             <h1>Analisis de Sentimientos de Tweets <i class="twitter outline icon"></i> </h1>
+             <h2>Extrae <b class="ui green header" >Conocimiento</b>  de los datos</h2>
+             <p>Logra una visión holística del posicionamiento de los candidatos en Twitter.</p>
+             <p><b class="ui blue header" >Toma acción</b> filtrando las opiniones negativas a través de  canales de comunicación apropiados.</p>
+         </div>
+        </div>
+    </div>
+   </div>
+</header>
+
+<div class="ui container">
+    <div style="margin-top:20px;" id="about">
+        <h1 class="ui center aligned header">Explora las Opciones</h1>
+        <p>Las redes sociales se han convertido en una herramienta poderosa de opinión general sobre temas como política, productos, servicios, organizaciones y empresas. Twitter cuenta con más de 330 millones de usuarios activos con una población compuesta en su mayoría (65%) por usuarios entre 35 a 65 años de edad.</p>
+        <p>La opinión está en las redes. Este Software basado en Inteligencia Artificial te da las herramientas para que tu organización política pueda capitalizar sobre la opinión y la percepción sobre cualquier tema de interés.</p>
+    </div>
+    <div class="ui three column grid">
+        <div class="row" style="margin-top: 50px;">
+            <div class="column">
+                <div class="ui segment">
+                    <div class="ui center aligned icon header">
+                        <i class="green life ring outline icon"></i>
+                        <h4 class="ui header">Análisis de Sentimiento en Tiempo Real</h4>
+                    </div>
+                    <p>Extrae los sentimientos en cada uno de los tweets en los que se mencionó el candidato.</p>
+                </div>
+            </div>
+            <div class="column">
+                <div class="ui segment">
+                    <div class="ui center aligned icon header">
+                        <i class="green chart line icon"></i>
+                        <h4 class="ui header">Ranking del Candidato</h4>
+                    </div>
+                    <p>Obtén un resúmen de la cantidad de Retweets y Likes de los tweets del candidato.</p>
+                </div>
+            </div>
+            <div class="column">
+                <div class="ui segment">
+                    <div class="ui center aligned icon header">
+                        <i class="green balance scale icon"></i>
+                        <h4 class="ui header">Opinión</h4>
+                    </div>
+                    <p>Capitaliza los Tweets más populares para generar opinión.</p>
+                </div>
+            </div>
+        </div>
+        <div class="row" style="margin-top: 50px;">
+            <div class="column">
+                <div class="ui segment">
+                    <div class="ui center aligned icon header">
+                        <i class="green comment outline icon"></i>
+                        <h4 class="ui header">Menciones</h4>
+                    </div>
+                    <p>Obtén un resumen de los tweets más recientes en los que se menciona el candidato.</p>
+                </div>
+            </div>
+            <div class="column">
+                <div class="ui segment">
+                    <div class="ui center aligned icon header">
+                        <i class="green chart bar outline icon"></i>
+                        <h4 class="ui header">Datos en Tiempo Real</h4>
+                    </div>
+                    <p>Extrae los ultimos tweets del candidato en tiempo real.</p>
+                </div>
+            </div>
+            <div class="column">
+                <div class="ui segment">
+                    <div class="ui center aligned icon header">
+                        <i class="green lightbulb outline icon"></i>
+                        <h4 class="ui header">Ventaja Competitiva</h4>
+                    </div>
+                    <p>El conocimiento se convierte en ventaja competitiva.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="ui inverted vertical footer segment" style="background:rgba(0, 3, 39, 0.39); margin-top:30px;">
+    <div class="ui container">
+        <div class="ui two column grid">
+            <div class="row">
+                <div class="column">
+                    <i class="copyright outline icon"></i> 2020 Miguel Acevedo Derechos Reservados
+                </div>
+                <div class="column" id="contactos">
+                    <h4 class="ui inverted header">Contactos</h4>
+                    <div class="ui inverted link list">
+                        <a href="mailto: miguelacevedowah@gmail.com" target="_blank" class="item"><i class="envelope icon"></i>Email</a>
+                        <a href="https://www.linkedin.com/in/miguel-acevedo" target="_blank" class="item"><i class="linkedin icon"></i> LinkedIn</a>
+                        <a href="https://github.com/miguelalb" target="_blank" class="item"><i class="github icon"></i>Github</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock content %}
+{% block script %}
+
+{% endblock script %}

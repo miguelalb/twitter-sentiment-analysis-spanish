@@ -1,0 +1,185 @@
+{% extends 'base.html' %}
+{% block head %}
+<!--CUSTOM CSS-->
+<link rel="stylesheet" href="{{ url_for('static', filename='stylesheets/app_custom.css') }}">
+<style>
+/* DataTables pagination and search to white*/
+.dataTables_length {
+    color: white !important;
+}
+
+.dataTables_filter {
+    color: white !important;
+}
+
+.dataTables_info {
+    color: white !important;
+}
+
+/*.dataTables_paginate {
+    color: white !important;
+}*/
+        
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="ui container">
+    <div class="ui sidebar vertical left inverted menu">
+        <div class="item">
+            <form action="" method="post">
+                <div class="header">Buscar Tweets</div>
+                {{ form1.hidden_tag()}}
+                <br>
+                {{form1.screen_name(id="tweet-select",class="ui fluid multiple search selection dropdown")}}
+                <br>
+                {{ form1.cant_tweets(id="cant-tweets", min="20", max="100", step="10")}}
+                <br>
+                {{ form1.submit1(class="ui button teal")}}
+            </form>
+        </div>
+        <div class="item">
+            <form action="" method="post">
+                <div class="header">Buscar Mentions</div>
+                <br>
+                {{ form2.hidden_tag()}}
+                {{ form2.terminos(id="mention-select", class="ui fluid multiple search selection dropdown")}}
+                <br>
+                {{ form2.cant_mentions(id="cant-mentions",step="10", min="20", max="100")}}
+                <br>
+                
+                {{ form2.submit2(class="ui button teal")}}
+            </form>
+        </div>
+    
+    </div>
+    <div class="ui secondary icon menu">
+        <a id="toggle" class="item mycolor">
+            <i class="sidebar icon mycolor"></i>
+            <span class="mycolor">Menu</span> 
+        </a>
+        <div class="right menu">
+            <div class="ui simple dropdown item" onmouseover="me()">
+                <span class="mycolor">{{ current_user.username }}</span>
+                <i class="dropdown icon mycolor"></i>
+                <div id="mlist" class="menu">
+                    <a href="#" class="item"><i class="users icon"></i>Profile</a>
+                </div>
+            </div>
+            <a href="{{ url_for('main.index') }}" class="item">
+                <div class="mycolor">
+                    Home
+                </div>
+            </a>
+            <a class="item" href="{{ url_for('auth.logout') }}">
+                <div class="mycolor">
+                    <i class="user icon"></i>
+                    Log Out
+                </div>
+            </a>
+        </div>
+    </div>
+    <div class="dimmed pusher dimmable">
+            <div id="loader" class="ui inverted dimmer">
+                <div class="ui loader"></div>
+            </div>
+            <div id="main" class="ui grid">
+                <div class="ui fourteen wide column container">
+                    <h1 class="ui header">
+                        <i class="twitter icon mycolor"></i>
+                        <div class="content">
+                            Twitter Data Analysis App
+                        </div>
+                    </h1>
+                    
+                    <p>Disclaimer:</p>
+                    <p><small>La clasificación de sentimientos es una estimación probabilística de la opinión emocional predominante dentro del tweet. Esta clasificación indica que tanto contenido emocional está presente en el texto y su valor es proporcional a la longitud del Tweet. Tomar en cuenta que el algoritmo de Procesamiento de Lenguaje Natural clasifica las emociones del documento entre positiva, negativa o neutral pero, no es capaz de identificar el tipo de emoción presente en el texto. (i.e.: Es decir no podría identificar si la emoción expresa enojo, ira o tristeza).</small></p>
+                    <br>
+                    <br>
+                        
+                    {% if table is not none%}
+                    <h3 class="ui header">
+                        <i class="twitter square icon mycolor"></i>
+                        <div class="content">
+                            Tweets
+                        </div>
+                    </h3>
+                    <br>
+                    <!--Main Table used for both tweets and sentiment-->
+                    {{table.to_html(classes="dftable ui celled table", justify='center')|safe}}
+                    <br>
+                        {% if table2 is not none %}
+                        <!--Mentions, Sentiment and cummulative graph-->
+                        <h3 class="ui header">
+                            <i class="chart bar icon mycolor"></i>
+                            <div class="content">
+                                Sentimiento Acumulado por Hora
+                            </div>
+                        </h3>
+                        <br>
+                        <!--Visualizacion de Sentimiento Acumulado-->
+                        <div id="vis" class="ui container"></div>
+                        <br>
+                        <h3 class="ui header">
+                            <i class="columns icon mycolor"></i>
+                            <div class="content">
+                                Resúmen     
+                            </div>
+                        </h3>
+                        {{ table2.to_html(classes="dftable ui celled table", justify='center')|safe}}
+                        <br>
+                        <h3 class="ui header">
+                            <i class="thumbs down outline icon mycolor"></i>
+                            <div class="content">
+                                Negativas con Mayor Alcance Potencial     
+                            </div>
+                        </h3>
+                        {{ table3.to_html(classes="dftable ui celled table", justify='center')|safe}}
+                        {% else %}
+                        <!--Jinja2 Sub-Template for tweets, raking-likes-->
+                        {% include '_tweets.html' %}
+                        {% endif %}
+                    {% endif %}
+                    
+                </div>
+                
+            </div>
+        
+        
+    </div>
+</div>
+
+{% endblock content %}
+
+{% block script %}
+<script>
+    // VEGA-LITE VISUALIZATION RENDERER
+    var VlSpec = {{ viz|safe }};
+
+    var opt = {
+        actions: {
+        export: true,
+        source: false,
+        compiled: false,
+        editor: false
+        },
+        tooltip:{
+            theme: 'dark'
+        }
+    };
+    
+    vegaEmbed("#vis", VlSpec,opt)
+    .then(function(result) {
+        // result.view contains the Vega view
+    })
+    .catch(console.error);
+</script>
+<script>
+//    $('.ui.button.teal').click(function(){
+//        $('div.pusher.dimmed').addClass("ui loader");
+//    });
+</script>
+<!--CUSTOM JS-->
+<script src="{{ url_for('static', filename='stylesheets/app_custom.js') }}" ></script>
+
+{% endblock script %}

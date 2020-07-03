@@ -1,0 +1,36 @@
+body.pushable>.pusher {
+    /*background: #88bdbc;
+    background: #2d5f5d;*/
+    background: #474853;
+}
+body {
+    /*background: #88bdbc;
+    background: #2d5f5d;*/
+    background: #474853;
+}
+#main {
+    margin-top: 5%;
+    color: white;
+}
+
+.ui.secondary.icon.menu {
+    margin-top: 1%;
+}
+.ui.vertical.animated.button {
+    margin-top: 5%;
+}
+#slider1 {
+    margin: 10px;
+}
+.content{
+    color: white;
+}
+.mycolor{
+    color: white;
+}
+.row {
+    color: white;
+}
+.item {
+    color: white;
+}

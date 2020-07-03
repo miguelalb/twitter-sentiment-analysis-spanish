@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <!--JQUERY UI CSS-->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.css">
+    <!--JQUERY/JQUERY UI Script-->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"></script>
+    <!--SEMANTIC UI CSS-->
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.4.1/semantic.min.css">
+    <!--SEMANTIC UI Script-->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.4.1/semantic.min.js"></script>
+    <!-- Vega-Lite Visualization Scripts-->
+    <script src="https://cdn.jsdelivr.net/npm/vega@5"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vega-lite@4"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vega-embed@6"></script>
+    <!--DATATABLES JQUERY PLUGIN-->
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.21/css/jquery.dataTables.css">
+    <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.21/js/jquery.dataTables.js"></script>
+    <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.21/js/dataTables.semanticui.min.js"></script>
+    {% block head %}{% endblock %}
+    
+    {% if title %}
+        <title>Tweeter Sentiment Analysis - {{ title }}</title>
+    {% else %}
+        <title>Tweeter Sentiment Analysis</title>
+    {% endif %}
+    
+</head>
+<body>
+    {% with messages = get_flashed_messages(with_categories=true) %}
+    {% if messages %}
+    {% for category, message in messages %}
+    <div class="ui small {{ category }} message container" role="alert">
+        <i class="close icon"></i>
+        <div class="header">{{ message }}</div>
+    </div>
+    {% endfor %}
+    {% endif %}
+    {% endwith %}
+
+    {% block content %}{% endblock content %}
+    
+
+    {% block script %}{% endblock script %}
+    <script>
+    $('.message .close')
+        .on('click', function() {
+            $(this)
+            .closest('.message')
+            .transition('fade')
+            ;
+        });
+    </script>
+    <script>
+        {{ moment.include_moment() }}
+    </script>
+    
+</body>
+</html>
